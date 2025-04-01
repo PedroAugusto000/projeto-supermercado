@@ -1,6 +1,7 @@
 package com.online.supermercado.api.supermercado;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,20 @@ public class ProdutoController {
 	
 	@GetMapping()
 	public ResponseEntity get() {
-		List<ProdutoDTO> produtos = produtoService.getProdutos();
-		return ResponseEntity.ok(produtos);
+		List<ProdutoDTO> produto = produtoService.getProdutos();
+		return ResponseEntity.ok(produto);
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity get(@PathVariable("id")Long id){ //PathVariable pega valores direto da URL, então ele vai catar o número do ID, caso exista, quando eu digitar api/projeto/supermercado/1
+		ProdutoDTO produto = produtoService.getProdutoById(id); //Aqui eu só tô chamando o método do meu service e instanciando o ProdutoDTO como produto
+		
+		return ResponseEntity.ok(produto);
+	}
+	
+	@GetMapping("/categoria/{categoria}")
+	public ResponseEntity get(@PathVariable("categoria") String categoria) {
+		List<ProdutoDTO> produto = produtoService.getProdutoByCategoria(categoria);
+		return ResponseEntity.ok(produto);
 	}
 }
