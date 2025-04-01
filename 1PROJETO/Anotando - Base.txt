@@ -1,0 +1,13 @@
+1. A principio a ideia é fazer um projeto de um supermercado bem parecido com esse: https://bigboxdelivery.com.br/
+
+2. As tabelas que devem ser criadas seriam: produtos e usuários (Usuários vamos deixar pro final  do projeto)
+
+3. Tabela produtos:
+
+- Id
+- Nome
+- Preço
+- Categoria
+- Descrição
+- urlFoto
+

@@ -1,0 +1,23 @@
+Botão direito na pasta do projeto -> Git bash here -> Git init
+
+No terminal se apresenta:
+git config --global user.name "Pedro Augusto"
+git config --global user.email "pedroaugustomoura000@gmail.com"
+
+Gera a chave SSH
+ssh-keygen -t ed25519 -C "pedroaugustomoura000@gmail.com"
+
+Copia a chave PÚBLICA, a privada não compartilha
+cat ~/.ssh/id_ed25519.pub
+
+GitHub -> Settings -> SSH and GPG Keys -> New SSH key -> Coloca um nome intuitivo pra ela -> Cola ela na "Key" e depois salva
+
+No GitHub vai no repositório -> Seleciona o campo SSH -> Copia a URL dele: git@github.com:PedroAugusto000/projeto-supermercado.git 
+
+Vai no Git Bash -> git remote add origin git@github.com:PedroAugusto000/projeto-supermercado.git
+
+Agora é só fazer os commit e push normalmente -> git add . -> git commit -m "" -> git push -u origin master
+
+Pra quem curte usar a main invés da master -> git branch -M main
+
+
