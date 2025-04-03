@@ -16,5 +16,5 @@ public class ProdutoDTO {
     public static ProdutoDTO create(Produto produto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(produto, ProdutoDTO.class);
-    }
+    }//Converte qualquer entidade Produto em ProdutoDTO copiando os atributos compátiveis
 }

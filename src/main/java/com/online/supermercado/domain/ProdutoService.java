@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.online.supermercado.api.exception.ObjectNotFoundException;
 import com.online.supermercado.domain.dto.ProdutoDTO;
@@ -44,5 +47,41 @@ public class ProdutoService {
 	public List<ProdutoDTO> getProdutoByCategoria(String categoria) {
 		List<ProdutoDTO> list = produtoRepository.findByCategoria(categoria).stream().map(ProdutoDTO::create).collect(Collectors.toList());
 		return list;
+	}
+	
+	public ProdutoDTO insert (Produto produto){
+		Assert.isNull(produto.getId(), "Não foi possíveis inserir o registro!");
+		
+		return ProdutoDTO.create(produtoRepository.save(produto));
+		
+		//Assert.isNull eu to garantido que o id do produto é nulo, se não ele lança uma exceção
+		//produtoRepository.save(produto) chama o método do repositório pra salvar 
+		//return ProdutoDTO.create to chamando o meu método create lá da ProdutoDTO
+	}
+	
+	public ProdutoDTO update (Produto produto, Long id) {
+		Assert.notNull(id,"Não foi possível atualizar o registro"); //ID for nulo já trava tudo aqui
+		
+		Optional<Produto> optional = produtoRepository.findById(id); //Acha o produto pelo id
+		if (optional.isPresent()) { //Se tiver presente...
+			
+			Produto db = optional.get(); //Pega o produto de dentro do optional
+			
+			db.setNome(produto.getNome()); //Pega os dados antigos e já atualiza com os novos
+			db.setCategoria(produto.getCategoria()); //Pega os dados antigos e já atualiza com os novos
+			System.out.println("Produto id " + db.getId());
+			
+			produtoRepository.save(db);
+			
+			return ProdutoDTO.create(db);
+			
+		} else {
+			return null;
+			//throw new RuntimeErrorException("Não foi possível atualizar o registro");
+		}
+	}
+	
+	public void delete (Long id) {
+		produtoRepository.deleteById(id);
 	}
 }
